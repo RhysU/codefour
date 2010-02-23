@@ -1,3 +1,5 @@
+! $HeadURL$
+! $Id$
 SUBROUTINE reconstruct (ur, u, n, bias)
 ! This function takes values of u in x0,x1,x2,x3,...,xn
 ! and returns fifth-order WENO reconstructed values, ur, in x(1/2), x(3/2),...,x(n+1/2)

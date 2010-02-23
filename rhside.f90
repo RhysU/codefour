@@ -1,3 +1,5 @@
+! $HeadURL$
+! $Id$
 SUBROUTINE rhside (fout, fin, n, hi)
 ! This evaluates the right side assuming periodic boundary conditions
  USE doublePrecision

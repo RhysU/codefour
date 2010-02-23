@@ -1,3 +1,5 @@
+# $HeadURL$
+# $Id$
 CFLAGS= -O3 -I.
 #FFLAGS= -g -W -pedantic -ggdb -gstabs+ -g3
 FFLAGS= -O

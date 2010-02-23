@@ -1,3 +1,5 @@
+! $HeadURL$
+! $Id$
 PROGRAM main
 ! This program solves the one-dimensional scalar conservation law u_t + f(u)_x = 0
 ! using fifth-order WENO reconstruction and a Lax-Friedrichs flux (in flux.f90).

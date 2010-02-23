@@ -1,3 +1,5 @@
+! $HeadURL$
+! $Id$
 SUBROUTINE printdble (u, n, str)
  USE doublePrecision
  IMPLICIT NONE
