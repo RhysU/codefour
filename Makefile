@@ -4,10 +4,13 @@ CFLAGS= -O3 -I.
 #FFLAGS= -g -W -pedantic -ggdb -gstabs+ -g3
 FFLAGS= -O
 
+programs=weno5.x
 objects=assorted.o doublePrecision.o flux.o main.o reconstruct.o rhside.o
 
+all: $(programs)
+
 weno5.x: $(objects)
-	$(LD) -o $@ $(OBJS)
+	$(LD) -o $@ $(objects)
 
 # Module dependencies
 assorted.f90:    doublePrecision.mod
@@ -17,7 +20,7 @@ reconstruct.f90: doublePrecision.mod
 rhside.f90:      doublePrecision.mod
 
 clean:
-	@rm -fv *.o *.a *.mod
+	@rm -fv *.mod $(objects) $(programs)
 
 # Use GNU compilers if choice not present in environment
 ifndef CXX
