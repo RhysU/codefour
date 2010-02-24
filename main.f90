@@ -11,7 +11,7 @@ PROGRAM main
  INTEGER :: n
  REAL(KIND = dp), PARAMETER :: tend = 0.30d0
  REAL(KIND = dp), PARAMETER :: cfl = 0.5d0
- REAL(KIND = dp), PARAMETER :: pi = 3.141592653589793d0
+!REAL(KIND = dp), PARAMETER :: pi = 3.141592653589793d0 ! No need to redefine
  INTEGER, PARAMETER :: tprint = 1    
  INTEGER :: i, j, nt, nsteps
  REAL(KIND = dp) :: h, hi, t, dt, lambda, pi
