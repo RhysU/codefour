@@ -10,17 +10,17 @@ SUBROUTINE reconstruct (ur, u, n, bias)
  INTEGER, INTENT(IN) :: n, bias
  REAL(KIND = dp), INTENT(IN) :: u(0:n)
  REAL(KIND = dp), INTENT(OUT) :: ur(0:n)
- REAL(KIND = dp), PARAMETER :: eps = 1.d-6     ! guarantee nonzero denominator
- REAL(KIND = dp) :: beta(1:3)                  ! smoothness indicators
- REAL(KIND = dp) :: w(1:3)                     ! nonlinear weights
- REAL(KIND = dp) :: wt(1:3), wtsumi            ! temporary nonlinear weights
- REAL(KIND = dp) :: gam(1:3)                   ! linear weights
- REAL(KIND = dp) :: urloc(1:3)                 ! the three local reconstructions
- REAL(KIND = dp) :: a(1:3,1:3)                 ! weights in reconstruction
- REAL(KIND = dp) :: b(1:2)                     ! constants for beta computation
+ REAL(KIND = dp), PARAMETER :: eps = 1.d-6  ! guarantee nonzero denominator
+ REAL(KIND = dp) :: beta(1:3)               ! smoothness indicators
+ REAL(KIND = dp) :: w(1:3)                  ! nonlinear weights
+ REAL(KIND = dp) :: wt(1:3), wtsumi         ! temporary nonlinear weights
+ REAL(KIND = dp) :: gam(1:3)                ! linear weights
+ REAL(KIND = dp) :: urloc(1:3)              ! the three local reconstructions
+ REAL(KIND = dp) :: a(1:3,1:3)              ! weights in reconstruction
+ REAL(KIND = dp) :: b(1:2)                  ! constants for beta computation
  INTEGER :: i
- REAL(KIND = dp) :: v(-2:n+3)                  ! add on periodic boundary conditions
- REAL(KIND = dp) :: v0, vp, vpp, vppp, vm, vmm ! local values
+ REAL(KIND = dp) :: v(-2:n+3)               ! add on periodic boundary conditions
+ REAL(KIND = dp) :: v0, vp, vpp, vm, vmm    ! local values
 
  a(1,1) = 1.d0 / 3.d0
  a(1,2) = -7.d0 / 6.d0
