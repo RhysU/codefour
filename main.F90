@@ -5,17 +5,17 @@ PROGRAM main
 ! 0 using WENO reconstruction per reconstructWENO_ORDER #define and a
 ! Lax-Friedrichs flux (in flux.f90).  Time stepping is performed using a
 ! 3rd-order TVD Runge-Kutta scheme.  Periodic boundary conditions are used, but
-! that is hidden in subroutines. 
+! that is hidden in subroutines.
 
  USE doublePrecision
  IMPLICIT NONE
  INTEGER :: n
  REAL(KIND = dp), PARAMETER :: tend = 0.30d0
  REAL(KIND = dp), PARAMETER :: cfl = 0.5d0
-!REAL(KIND = dp), PARAMETER :: pi = 3.141592653589793d0 ! No need to redefine
- INTEGER, PARAMETER :: tprint = 1    
+ REAL(KIND = dp), PARAMETER :: pi = 4._dp*ATAN(1._dp)
+ INTEGER, PARAMETER :: tprint = 1
  INTEGER :: i, j, nt, nsteps
- REAL(KIND = dp) :: h, hi, t, dt, lambda, pi
+ REAL(KIND = dp) :: h, hi, t, dt, lambda
  REAL(KIND = dp) :: maxerr, err, etmp, rk(1:2,1:2)
  REAL(KIND = dp), DIMENSION(:), ALLOCATABLE :: x, xh, u, frp, frm, fp, fm, f
  REAL(KIND = dp), DIMENSION(:,:), ALLOCATABLE :: up
@@ -54,7 +54,8 @@ PROGRAM main
 
 ! A reconstruction example
 ! uncomment to check the order of accuracy of the reconstruction
- IF (.FALSE.) THEN
+ IF (.TRUE.) THEN
+  WRITE (*, *) pi
   DO i = 0, n, 1
 ! Need averages
    u(i) = -1.d0 / (h * 20.d0 * pi) * ( &
@@ -94,7 +95,7 @@ PROGRAM main
   CALL flux (fp, fm, u, n)
   CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
   CALL RECONSTRUCT_FUNCTION (frm, fm, n, -1)
-  f = frp + frm 
+  f = frp + frm
   CALL rhside(fp, f, n, hi)
   up(:,1) = u + dt * fp
 ! Substep 2

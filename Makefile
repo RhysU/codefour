@@ -1,8 +1,8 @@
 # $HeadURL$
 # $Id$
-CFLAGS= -g -O1 -I.
+CFLAGS= -g -O0 -I.
 #FFLAGS= -g -W -pedantic -ggdb -gstabs+ -g3
-FFLAGS= -g -O1 -I.
+FFLAGS= -g -O0 -I.
 
 programs=weno5.x weno3.x
 common=assorted.o doublePrecision.o flux.o rhside.o
