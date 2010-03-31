@@ -54,8 +54,7 @@ PROGRAM main
 
 ! A reconstruction example
 ! uncomment to check the order of accuracy of the reconstruction
- IF (.TRUE.) THEN
-  WRITE (*, *) pi
+ IF (.FALSE.) THEN
   DO i = 0, n, 1
 ! Need averages
    u(i) = -1.d0 / (h * 20.d0 * pi) * ( &
