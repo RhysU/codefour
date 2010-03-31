@@ -4,13 +4,25 @@ CFLAGS= -O3 -I.
 #FFLAGS= -g -W -pedantic -ggdb -gstabs+ -g3
 FFLAGS= -O
 
-programs=weno5.x
-objects=assorted.o doublePrecision.o flux.o main.o reconstruct3.o reconstruct5.o rhside.o
+programs=weno5.x weno3.x
+objects=assorted.o doublePrecision.o flux.o rhside.o \
+		reconstruct3.o reconstruct5.o
 
 all: $(programs)
 
-weno5.x: $(objects)
-	$(LD) -o $@ $(objects)
+main3.o: FFLAGS += -cpp -DRECONSTRUCT_FUNCTION=reconstruct3
+main3.o: main.f90
+	$(FC) -o $@ -c $(FFLAGS) $<
+
+weno3.x: main3.o $(objects)
+	$(LD) -o $@ $^
+
+main5.o: FFLAGS += -cpp -DRECONSTRUCT_FUNCTION=reconstruct5
+main5.o: main.f90
+	$(FC) -o $@ -c $(FFLAGS) $<
+
+weno5.x: main5.o $(objects)
+	$(LD) -o $@ $^
 
 # Module dependencies
 assorted.f90:     doublePrecision.mod
@@ -21,7 +33,7 @@ reconstruct5.f90: doublePrecision.mod
 rhside.f90:       doublePrecision.mod
 
 clean:
-	@rm -fv *.mod $(objects) $(programs)
+	@rm -fv *.mod *.o *.x
 
 # Use GNU compilers if choice not present in environment
 ifndef CXX
