@@ -1,6 +1,6 @@
 ! $HeadURL$
 ! $Id$
-SUBROUTINE reconstruct (ur, u, n, bias)
+SUBROUTINE reconstruct3 (ur, u, n, bias)
 ! This function takes values of u in x0,x1,x2,x3,...,xn
 ! and returns 3rd-order WENO reconstructed values, ur, in x(1/2), x(3/2),...,x(n+1/2)
 ! 
@@ -15,7 +15,7 @@ SUBROUTINE reconstruct (ur, u, n, bias)
  REAL(KIND = dp) :: beta(1:2)               ! smoothness indicators
  REAL(KIND = dp) :: w(1:2)                  ! nonlinear weights
  REAL(KIND = dp) :: wt(1:2), wtsumi         ! temporary nonlinear weights
- REAL(KIND = dp) :: urloc(1:2)              ! the three local reconstructions
+ REAL(KIND = dp) :: urloc(1:2)              ! the two local reconstructions
  REAL(KIND = dp) :: a(1:2,1:2)              ! weights in reconstruction
  INTEGER :: i
  REAL(KIND = dp) :: v(-1:n+2)               ! add on periodic boundary conditions
@@ -75,4 +75,4 @@ SUBROUTINE reconstruct (ur, u, n, bias)
    ur(i) = w(1) * urloc(1) + w(2) * urloc(2)
   END DO
  END IF
-END SUBROUTINE reconstruct
+END SUBROUTINE reconstruct3

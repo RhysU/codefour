@@ -52,9 +52,9 @@ PROGRAM main
    fp(i) = SIN(20.d0 * pi * xh(i))
   END DO
   CALL printdble (fp, n, 'usin.txt')
-  CALL reconstruct (f, u, n, -1)
+  CALL reconstruct5 (f, u, n, -1)
   CALL printdble (f, n, 'urm.txt')
-  CALL reconstruct (f, u, n, +1)
+  CALL reconstruct5 (f, u, n, +1)
   CALL printdble (f, n, 'urp.txt')
   maxerr = 0
   DO i = 0, n, 1
@@ -82,22 +82,22 @@ PROGRAM main
   t = REAL(nt-1,dp) * dt
 ! Substep 1
   CALL flux (fp, fm, u, n)
-  CALL reconstruct (frp, fp, n, 1)
-  CALL reconstruct (frm, fm, n, -1)
+  CALL reconstruct5 (frp, fp, n, 1)
+  CALL reconstruct5 (frm, fm, n, -1)
   f = frp + frm 
   CALL rhside(fp, f, n, hi)
   up(:,1) = u + dt * fp
 ! Substep 2
   CALL flux (fp, fm, up(:,1), n)
-  CALL reconstruct (frp, fp, n, 1)
-  CALL reconstruct (frm, fm, n, -1)
+  CALL reconstruct5 (frp, fp, n, 1)
+  CALL reconstruct5 (frm, fm, n, -1)
   f = frp + frm
   CALL rhside (fp, f, n, hi)
   up(:,2) = rk(1,1) * u + rk(1,2) * (up(:,1) + dt * fp)
 ! Substep 3
   CALL flux (fp, fm, up(:,2), n)
-  CALL reconstruct (frp, fp, n, 1)
-  CALL reconstruct (frm, fm, n, -1)
+  CALL reconstruct5 (frp, fp, n, 1)
+  CALL reconstruct5 (frm, fm, n, -1)
   f = frp + frm
   CALL rhside(fp, f, n, hi)
   u = rk(2,1) * u + rk(2,2) * (up(:,2) + dt * fp)

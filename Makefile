@@ -5,7 +5,7 @@ CFLAGS= -O3 -I.
 FFLAGS= -O
 
 programs=weno5.x
-objects=assorted.o doublePrecision.o flux.o main.o reconstruct.o rhside.o
+objects=assorted.o doublePrecision.o flux.o main.o reconstruct3.o reconstruct5.o rhside.o
 
 all: $(programs)
 
@@ -13,11 +13,12 @@ weno5.x: $(objects)
 	$(LD) -o $@ $(objects)
 
 # Module dependencies
-assorted.f90:    doublePrecision.mod
-flux.f90:        doublePrecision.mod
-main.f90:        doublePrecision.mod
-reconstruct.f90: doublePrecision.mod
-rhside.f90:      doublePrecision.mod
+assorted.f90:     doublePrecision.mod
+flux.f90:         doublePrecision.mod
+main.f90:         doublePrecision.mod
+reconstruct3.f90: doublePrecision.mod
+reconstruct5.f90: doublePrecision.mod
+rhside.f90:       doublePrecision.mod
 
 clean:
 	@rm -fv *.mod $(objects) $(programs)
