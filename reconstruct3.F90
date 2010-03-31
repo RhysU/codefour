@@ -72,7 +72,7 @@ SUBROUTINE reconstruct3 (ur, u, n, bias)
    w(1) = wt(1) * wtsumi
    w(2) = wt(2) * wtsumi
 ! Finally reconstruct, formula (3.16)
-   ur(i) = w(1) * urloc(1) + w(2) * urloc(2)
+   ur(i-1) = w(1) * urloc(1) + w(2) * urloc(2)
   END DO
  END IF
 END SUBROUTINE reconstruct3
