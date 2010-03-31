@@ -5,32 +5,31 @@ CFLAGS= -O3 -I.
 FFLAGS= -O
 
 programs=weno5.x weno3.x
-objects=assorted.o doublePrecision.o flux.o rhside.o \
-		reconstruct3.o reconstruct5.o
+common=assorted.o doublePrecision.o flux.o rhside.o
 
 all: $(programs)
 
-main3.o: FFLAGS += -cpp -DRECONSTRUCT_FUNCTION=reconstruct3
-main3.o: main.f90
+main3.o: FFLAGS += -DWENOORDER=3
+main3.o: main.F90
 	$(FC) -o $@ -c $(FFLAGS) $<
 
-weno3.x: main3.o $(objects)
+weno3.x: main3.o reconstruct3.o $(common)
 	$(LD) -o $@ $^
 
-main5.o: FFLAGS += -cpp -DRECONSTRUCT_FUNCTION=reconstruct5
-main5.o: main.f90
+main5.o: FFLAGS += -DWENOORDER=5
+main5.o: main.F90
 	$(FC) -o $@ -c $(FFLAGS) $<
 
-weno5.x: main5.o $(objects)
+weno5.x: main5.o reconstruct5.o $(common)
 	$(LD) -o $@ $^
 
 # Module dependencies
-assorted.f90:     doublePrecision.mod
-flux.f90:         doublePrecision.mod
-main.f90:         doublePrecision.mod
-reconstruct3.f90: doublePrecision.mod
-reconstruct5.f90: doublePrecision.mod
-rhside.f90:       doublePrecision.mod
+assorted.F90:     doublePrecision.mod
+flux.F90:         doublePrecision.mod
+main.F90:         doublePrecision.mod
+reconstruct3.F90: doublePrecision.mod
+reconstruct5.F90: doublePrecision.mod
+rhside.F90:       doublePrecision.mod
 
 clean:
 	@rm -fv *.mod *.o *.x
@@ -57,8 +56,8 @@ AR=ar r
 .SUFFIXES: .C .o
 .SUFFIXES: .c .o
 .SUFFIXES: .f .o
-.SUFFIXES: .f90 .o
-.SUFFIXES: .f90 .mod
+.SUFFIXES: .F90 .o
+.SUFFIXES: .F90 .mod
 
 .C.o:
 	$(CXX) -c $(CFLAGS) $<
@@ -69,8 +68,8 @@ AR=ar r
 .f.o:
 	$(FC) -c $(FFLAGS) $<
 
-.f90.o:
+.F90.o:
 	$(FC) -c $(FFLAGS) $<
 
-.f90.mod:
+.F90.mod:
 	$(FC) -c $(FFLAGS) $<

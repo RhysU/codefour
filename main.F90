@@ -2,14 +2,10 @@
 ! $Id$
 PROGRAM main
 ! This program solves the one-dimensional scalar conservation law u_t + f(u)_x =
-! 0 using WENO reconstruction per RECONSTRUCT_FUNCTION #define and a
+! 0 using WENO reconstruction per reconstructWENO_ORDER #define and a
 ! Lax-Friedrichs flux (in flux.f90).  Time stepping is performed using a
 ! 3rd-order TVD Runge-Kutta scheme.  Periodic boundary conditions are used, but
 ! that is hidden in subroutines. 
-
-#ifndef RECONSTRUCT_FUNCTION
-#error "RECONSTRUCT_FUNCTION not #defined"
-#endif
 
  USE doublePrecision
  IMPLICIT NONE
@@ -46,6 +42,15 @@ PROGRAM main
   u(i) = SIN(2_dp * pi * x(i))
 ! if ((x(i) > 0.25) .AND. (x(i) < 0.75)) u(i) = 1_dp
  END DO
+
+#if WENOORDER == 3
+#define RECONSTRUCT_FUNCTION reconstruct3
+#elif WENOORDER == 5
+#define RECONSTRUCT_FUNCTION reconstruct5
+#else
+  #error "WENOORDER not #defined or unknown"
+#endif
+  PRINT '(" WENO reconstruction order = ", I2)', WENOORDER
 
 ! A reconstruction example
 ! uncomment to check the order of accuracy of the reconstruction
