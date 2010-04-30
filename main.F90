@@ -13,6 +13,7 @@ PROGRAM main
  REAL(KIND = dp), PARAMETER :: tend = 0.30d0
  REAL(KIND = dp), PARAMETER :: cfl = 0.5d0
  REAL(KIND = dp), PARAMETER :: pi = 4._dp*ATAN(1._dp)
+ REAL(KIND = dp), PARAMETER :: nu = 0.01d0
  INTEGER, PARAMETER :: tprint = 1
  INTEGER :: i, j, nt, nsteps
  REAL(KIND = dp) :: h, hi, t, dt, lambda
@@ -26,7 +27,8 @@ PROGRAM main
  CALL get_command_argument (1, str)
  READ (str, fmt = '(I10)') n
  CALL cpu_time (start)
- ALLOCATE (x(0:n), xh(0:n), u(0:n), up(0:n,1:2), frp(0:n), frm(0:n), f(0:n), fp(0:n), fm(0:n))
+ ALLOCATE ( x(0:n), xh(0:n), u(0:n), up(0:n,1:2), &
+            frp(0:n), frm(0:n), f(0:n), fp(0:n), fm(0:n) )
  h = 1.d0 / n
  hi = 1.d0 / h
 ! Setup grid x \in [0,1]
@@ -51,6 +53,21 @@ PROGRAM main
   #error "WENOORDER not #defined or unknown"
 #endif
   PRINT '(" WENO reconstruction order = ", I2)', WENOORDER
+
+#ifdef VISCOUSORDER
+  PRINT '(" Viscous term order = ", I2, " with viscosity = ", F16.12)', &
+        VISCOUSORDER, nu
+#if VISCOUSORDER == 2
+#define VISCOUS_FUNCTION viscous2
+#elif VISCOUSORDER == 4
+#define VISCOUS_FUNCTION viscous4
+#else
+  #error "VISCOUSORDER unknown"
+#endif
+#else
+#define VISCOUS_FUNCTION viscousnop
+  PRINT '(" No viscous term present ")'
+#endif
 
 ! A reconstruction example
 ! uncomment to check the order of accuracy of the reconstruction
@@ -97,6 +114,7 @@ PROGRAM main
   f = frp + frm
   CALL rhside(fp, f, n, hi)
   up(:,1) = u + dt * fp
+  CALL VISCOUS_FUNCTION (up(:,1), u, n, hi, dt*nu)
 ! Substep 2
   CALL flux (fp, fm, up(:,1), n)
   CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
@@ -104,6 +122,7 @@ PROGRAM main
   f = frp + frm
   CALL rhside (fp, f, n, hi)
   up(:,2) = rk(1,1) * u + rk(1,2) * (up(:,1) + dt * fp)
+  CALL VISCOUS_FUNCTION (up(:,2), up(:,1), n, hi, rk(1,2)*dt*nu)
 ! Substep 3
   CALL flux (fp, fm, up(:,2), n)
   CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
@@ -111,6 +130,7 @@ PROGRAM main
   f = frp + frm
   CALL rhside(fp, f, n, hi)
   u = rk(2,1) * u + rk(2,2) * (up(:,2) + dt * fp)
+  CALL VISCOUS_FUNCTION (u, up(:,2), n, hi, rk(2,2)*dt*nu)
 ! Print solution every tprint step
   IF ((nt == nsteps) .OR. (MODULO(nt, tprint) == 0)) THEN
    WRITE (itstr, "(I7.7)") nt
