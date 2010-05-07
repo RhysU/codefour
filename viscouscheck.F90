@@ -40,7 +40,7 @@ PROGRAM viscouscheck
    ! Output results
    WRITE (*, "('n=',i8)", advance="no") n
    DO j = 1, ncases, 1
-     WRITE (*, "(' ', g15.5)", advance="no") MAXVAL(d2u_error(j,:))
+     WRITE (*, "(' ', g15.10)", advance="no") MAXVAL(d2u_error(j,:))
    END DO
    WRITE (*, "('')")
 
