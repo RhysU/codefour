@@ -4,7 +4,7 @@ CFLAGS= -g -O3 -I.
 #FFLAGS= -g -W -pedantic -ggdb -gstabs+ -g3
 FFLAGS= -g -O3 -I.
 
-programs=weno5.x weno3.x weno54.x weno32.x
+programs=weno5.x weno3.x weno54.x weno32.x viscouscheck.x
 common=assorted.o doublePrecision.o flux.o rhside.o
 
 all: $(programs)
@@ -35,6 +35,9 @@ main54.o: main.F90
 	$(FC) -o $@ -c $(FFLAGS) $<
 
 weno54.x: main54.o reconstruct5.o viscous4.o $(common)
+	$(LD) -o $@ $^
+
+viscouscheck.x: viscouscheck.o viscousnop.o viscous2.o viscous4.o
 	$(LD) -o $@ $^
 
 # Module dependencies

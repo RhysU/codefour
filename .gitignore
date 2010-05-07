@@ -5,9 +5,11 @@
 /urm.txt
 /urp.txt
 /usin.txt
-/weno3.x
+/viscouscheck.x
 /weno32.x
-/weno5.x
+/weno3.x
 /weno54.x
+/weno5.x
+*.x
 /xh.txt
 /x.txt
