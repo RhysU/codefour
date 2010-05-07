@@ -7,9 +7,9 @@ SUBROUTINE viscous2 (vio, u, n, hi, alpha)
  IMPLICIT NONE
  INTEGER, INTENT(IN) :: n
  REAL(KIND = dp), INTENT(IN)  :: u(0:n), hi
- REAL(KIND = dp), INTENT(OUT) :: vio(0:n)      ! where to accumulate result
- REAL(KIND = dp), INTENT(IN)  :: alpha         ! accumulation coefficient
- REAL(KIND = dp)              :: c(0:1)        ! finite diff coefficients
+ REAL(KIND = dp), INTENT(INOUT) :: vio(0:n)  ! where to accumulate result
+ REAL(KIND = dp), INTENT(IN)  :: alpha       ! accumulation coefficient
+ REAL(KIND = dp)              :: c(0:1)      ! finite diff coefficients
  INTEGER                      :: i
 
 ! Precompute coefficients for (i-1), (i), (i+1) locations

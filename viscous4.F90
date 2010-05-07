@@ -6,11 +6,11 @@ SUBROUTINE viscous4 (vio, u, n, hi, alpha)
  USE doublePrecision
  IMPLICIT NONE
  INTEGER, INTENT(IN) :: n
- REAL(KIND = dp), INTENT(IN)  :: u(0:n), hi
- REAL(KIND = dp), INTENT(OUT) :: vio(0:n)      ! where to accumulate result
- REAL(KIND = dp), INTENT(IN)  :: alpha         ! accumulation coefficient
- REAL(KIND = dp)              :: c(0:2)        ! finite diff coefficients
- INTEGER                      :: i
+ REAL(KIND = dp), INTENT(IN)    :: u(0:n), hi
+ REAL(KIND = dp), INTENT(INOUT) :: vio(0:n)   ! where to accumulate result
+ REAL(KIND = dp), INTENT(IN)    :: alpha      ! accumulation coefficient
+ REAL(KIND = dp)                :: c(0:2)     ! finite diff coefficients
+ INTEGER                        :: i
 
  ! Precompute coefficients for (i-2), (i-1), (i), (i+1), (i+2) locations
  ! These incorporate the grid size, finite different weights, and alpha
