@@ -1,6 +1,6 @@
 # $HeadURL$
 # $Id$
-FFLAGS= -g -O0 -I.
+FFLAGS= -g -O0 -warn -I.
 
 programs=weno5.x weno3.x weno54.x weno32.x viscouscheck.x
 common=assorted.o doublePrecision.o flux.o rhside.o
@@ -35,7 +35,7 @@ main54.o: main.F90
 weno54.x: main54.o reconstruct5.o viscous4.o $(common)
 	$(LD) -o $@ $^
 
-viscouscheck.x: viscouscheck.o viscousnop.o viscous2.o viscous4.o
+viscouscheck.x: viscouscheck.o viscousnop.o viscous2.o viscous4.o assorted.o
 	$(LD) -o $@ $^
 
 # Module dependencies

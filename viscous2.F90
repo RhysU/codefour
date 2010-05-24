@@ -5,12 +5,12 @@ SUBROUTINE viscous2 (vio, u, n, hi, alpha)
 ! into vio using a second-order, centered finite difference.
  USE doublePrecision
  IMPLICIT NONE
- INTEGER, INTENT(IN) :: n
- REAL(KIND = dp), INTENT(IN)  :: u(0:n), hi
- REAL(KIND = dp), INTENT(INOUT) :: vio(0:n)  ! where to accumulate result
- REAL(KIND = dp), INTENT(IN)  :: alpha       ! accumulation coefficient
- REAL(KIND = dp)              :: c(0:1)      ! finite diff coefficients
- INTEGER                      :: i
+ INTEGER,         INTENT(IN)    :: n
+ REAL(KIND = dp), INTENT(IN)    :: u(0:n), hi
+ REAL(KIND = dp), INTENT(INOUT) :: vio(0:n)    ! where to accumulate result
+ REAL(KIND = dp), INTENT(IN)    :: alpha       ! accumulation coefficient
+ REAL(KIND = dp)                :: c(0:1)      ! finite diff coefficients
+ INTEGER                        :: i
 
 ! Precompute coefficients for (i-1), (i), (i+1) locations
 ! These incorporate the grid size, finite different weights, and alpha

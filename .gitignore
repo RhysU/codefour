@@ -1,5 +1,6 @@
 /*.a
 /doubleprecision.mod
+/*__genmod.f90
 /*.o
 /sol*.txt
 /urm.txt
@@ -10,6 +11,6 @@
 /weno3.x
 /weno54.x
 /weno5.x
-*.x
+/*.x
 /xh.txt
 /x.txt
