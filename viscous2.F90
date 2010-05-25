@@ -14,8 +14,8 @@ SUBROUTINE viscous2 (vio, u, n, hi, alpha)
 
 ! Precompute coefficients for (i-1), (i), (i+1) locations
 ! These incorporate the grid size, finite different weights, and alpha
- c(0) = alpha * (-2_dp)*hi**2
- c(1) = alpha * (+1_dp)*hi**2
+ c(0) = alpha * (-2._dp)*hi**2
+ c(1) = alpha * (+1._dp)*hi**2
 
 ! Accumulate result in vio in almost a single pass
  vio(0) = vio(0) + c(1)*u(n-1) + c(0)*u(0) + c(1)*u(1)

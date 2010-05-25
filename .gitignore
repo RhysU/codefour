@@ -1,6 +1,7 @@
 /*.a
 /doubleprecision.mod
 /*__genmod.f90
+/*__genmod.mod
 /*.o
 /sol*.txt
 /urm.txt

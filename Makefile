@@ -50,7 +50,7 @@ viscous4.F90:     doublePrecision.mod
 viscousnop.F90:   doublePrecision.mod
 
 clean:
-	@rm -fv *.mod *.o *.x *__genmod.f90
+	@rm -fv *.mod *.o *.x *__genmod.f90 *__genmod.mod
 
 # Use GNU compilers if choice not present in environment
 ifndef CXX

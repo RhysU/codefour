@@ -22,19 +22,13 @@ PROGRAM viscouscheck
  DO p = 3, powfinal, 1
    ! Initial manufactured field and clear accumulation locations
    n = 2**p
-   CALL problem1(n, h, u, expected)
-!  CALL printdble(u,        n, 'u.txt')         ! DEBUG
-!  CALL printdble(expected, n, 'expected.txt')  ! DEBUG
+   CALL problem2(n, h, u, expected)
 
    ! Compute the second derivatives of the field
    d2u = 0
    CALL viscousnop(d2u(1,:), u, n, 1_dp/h, REAL(1,dp))
    CALL viscous2(  d2u(2,:), u, n, 1_dp/h, REAL(1,dp))
    CALL viscous4(  d2u(3,:), u, n, 1_dp/h, REAL(1,dp))
-
-!  CALL printdble(d2u(1,:),  n, 'd2u_1.txt')    ! DEBUG
-!  CALL printdble(d2u(2,:),  n, 'd2u_2.txt')    ! DEBUG
-!  CALL printdble(d2u(3,:),  n, 'd2u_3.txt')    ! DEBUG
 
    ! Compute pointwise errors
    d2u_error = d2u
@@ -43,7 +37,7 @@ PROGRAM viscouscheck
    END DO
 
    ! Output results
-   WRITE (*, "('n=',i8)", advance="no") n
+   WRITE (*, "(i8)", advance="no") n
    DO j = 1, ncases, 1
      WRITE (*, "(' ', g24.16)", advance="no") MAXVAL(d2u_error(j,:))
    END DO
@@ -85,8 +79,8 @@ SUBROUTINE problem2 (n, h, u, d2u)
  h = 2_dp*pi/n
  DO i = 0, n, 1
   x      =  REAL(i,dp)*h
-  u(i)   =  COS(x + 2_dp*COS(3_dp*x))
-  d2u(i) =   -(6_dp*SIN(3_dp*x) - 1_dp)**2 * COS(x + 2_dp*COS(3_dp*x)) &
-            + 18_dp*SIN(x + 2_dp*COS(3_dp*x))*COS(3_dp*x)
+  u(i)   =  COS(x + 2._dp*COS(3._dp*x))
+  d2u(i) =   -(6._dp*SIN(3._dp*x) - 1._dp)**2 * COS(x + 2._dp*COS(3._dp*x)) &
+            + 18._dp*SIN(x + 2._dp*COS(3._dp*x))*COS(3._dp*x)
  END DO
 END SUBROUTINE problem2
