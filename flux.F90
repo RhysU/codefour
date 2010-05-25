@@ -13,7 +13,7 @@ SUBROUTINE flux (fp, fm, u, n)
  IF (.FALSE.) THEN
 ! The scalar advection equation
   DO i = 0, n, 1
-   alpha = 1.d0 
+   alpha = 1.d0
    fp(i) = 0.5_dp * (u(i) + alpha * u(i))
    fm(i) = 0.5_dp * (u(i) - alpha * u(i))
   END DO
@@ -27,5 +27,5 @@ SUBROUTINE flux (fp, fm, u, n)
    fm(i) = 0.5_dp * (0.5_dp * u(i)**2 - alpha * u(i))
   END DO
  END IF
- 
+
 END SUBROUTINE flux
