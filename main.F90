@@ -15,9 +15,9 @@ PROGRAM main
  REAL(KIND = dp), PARAMETER :: pi = 4._dp*ATAN(1._dp)
  REAL(KIND = dp), PARAMETER :: nu = 0.01d0
  INTEGER, PARAMETER :: tprint = 1
- INTEGER :: i, j, nt, nsteps
+ INTEGER :: i, nt, nsteps
  REAL(KIND = dp) :: h, hi, t, dt, lambda
- REAL(KIND = dp) :: maxerr, err, etmp, rk(1:2,1:2)
+ REAL(KIND = dp) :: maxerr, err, rk(1:2,1:2)
  REAL(KIND = dp), DIMENSION(:), ALLOCATABLE :: x, xh, u, frp, frm, fp, fm, f
  REAL(KIND = dp), DIMENSION(:,:), ALLOCATABLE :: up
  CHARACTER (len = 20) :: str
