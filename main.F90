@@ -10,10 +10,10 @@ PROGRAM main
  USE doublePrecision
  IMPLICIT NONE
  INTEGER :: n
- REAL(KIND = dp), PARAMETER :: tend = 0.30d0
- REAL(KIND = dp), PARAMETER :: cfl = 0.5d0
+ REAL(KIND = dp), PARAMETER :: tend = 0.30_dp
+ REAL(KIND = dp), PARAMETER :: cfl = 0.5_dp
  REAL(KIND = dp), PARAMETER :: pi = 4._dp*ATAN(1._dp)
- REAL(KIND = dp), PARAMETER :: nu = 0.01d0
+ REAL(KIND = dp), PARAMETER :: nu = 0.005_dp
  INTEGER, PARAMETER :: tprint = 1
  INTEGER :: i, nt, nsteps
  REAL(KIND = dp) :: h, hi, t, dt, lambda
@@ -97,7 +97,8 @@ PROGRAM main
  lambda = dt * hi
  nsteps = INT(tend / dt)
  dt = tend / REAL(nsteps, dp)
- PRINT '(" Number of time steps = ", I7)', nsteps
+ PRINT '(" Number of time steps = ", I7, " with dt = ", F16.12)', &
+       nsteps, dt
 ! TVD Runge-Kutta third-order accurate
  rk(1,1) = 0.75_dp
  rk(1,2) = 0.25_dp
@@ -113,24 +114,24 @@ PROGRAM main
   CALL RECONSTRUCT_FUNCTION (frm, fm, n, -1)
   f = frp + frm
   CALL rhside(fp, f, n, hi)
+  CALL VISCOUS_FUNCTION (fp, u, n, hi, nu)
   up(:,1) = u + dt * fp
-  CALL VISCOUS_FUNCTION (up(:,1), u, n, hi, dt*nu)
 ! Substep 2
   CALL flux (fp, fm, up(:,1), n)
   CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
   CALL RECONSTRUCT_FUNCTION (frm, fm, n, -1)
   f = frp + frm
   CALL rhside (fp, f, n, hi)
+  CALL VISCOUS_FUNCTION (fp, up(:,1), n, hi, nu)
   up(:,2) = rk(1,1) * u + rk(1,2) * (up(:,1) + dt * fp)
-  CALL VISCOUS_FUNCTION (up(:,2), up(:,1), n, hi, rk(1,2)*dt*nu)
 ! Substep 3
   CALL flux (fp, fm, up(:,2), n)
   CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
   CALL RECONSTRUCT_FUNCTION (frm, fm, n, -1)
   f = frp + frm
   CALL rhside(fp, f, n, hi)
+  CALL VISCOUS_FUNCTION (fp, up(:,2), n, hi, nu)
   u = rk(2,1) * u + rk(2,2) * (up(:,2) + dt * fp)
-  CALL VISCOUS_FUNCTION (u, up(:,2), n, hi, rk(2,2)*dt*nu)
 ! Print solution every tprint step
   IF ((nt == nsteps) .OR. (MODULO(nt, tprint) == 0)) THEN
    WRITE (itstr, "(I7.7)") nt
