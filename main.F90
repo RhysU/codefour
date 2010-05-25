@@ -13,7 +13,7 @@ PROGRAM main
  REAL(KIND = dp), PARAMETER :: tend = 0.30_dp
  REAL(KIND = dp), PARAMETER :: cfl = 0.5_dp
  REAL(KIND = dp), PARAMETER :: pi = 4._dp*ATAN(1._dp)
- REAL(KIND = dp), PARAMETER :: nu = 0.005_dp
+ REAL(KIND = dp), PARAMETER :: nu = 0.01_dp
  INTEGER, PARAMETER :: tprint = 1
  INTEGER :: i, nt, nsteps
  REAL(KIND = dp) :: h, hi, t, dt, lambda
@@ -93,7 +93,15 @@ PROGRAM main
  END IF
 
  t = 0_dp
+ ! Compute timestep from convective condition
  dt = cfl * h
+#ifdef VISCOUSORDER
+ ! Ensure Explicit RK3 diffusive stability criteria met:
+ ! Magnitude from where 1 + x + x**2/2 + x**3/6 ~ 1 along negative real axis
+ IF (dt > 2.512_dp / (nu * pi**2 * n**2)) THEN
+  dt = 2.512_dp / (nu * pi**2 * n **2)
+ END IF
+#endif
  lambda = dt * hi
  nsteps = INT(tend / dt)
  dt = tend / REAL(nsteps, dp)
