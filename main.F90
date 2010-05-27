@@ -14,6 +14,7 @@ PROGRAM main
 
 ! Problem parameters
   REAL(KIND = dp), PARAMETER :: pi      = 4._dp*ATAN(1._dp)
+  REAL(KIND = dp), PARAMETER :: twopi   = 2._dp*pi
   REAL(KIND = dp), PARAMETER :: tend    = 0.30_dp
   REAL(KIND = dp), PARAMETER :: cfl     = 0.5_dp
   REAL(KIND = dp), PARAMETER :: nu      = 0.01_dp
@@ -106,8 +107,11 @@ PROGRAM main
        file_hid, "t", 1, [INTEGER(HSIZE_T)::nsteps+1], &
        [(dt*i, i=0, nsteps, 1)], error)
 
-! Specify initial condition
-  u = SIN(2_dp * pi * x)
+! Initial condition: simple sine wave for debugging
+! u = SIN(twopi * x)
+! Initial condition: viscous analytic solution available via Hopf-Cole
+  u =   ( 297._dp*(                 SIN(1._dp + 3._dp*twopi*x))) &
+      / (  50._dp*(100._dp + 99._dp*COS(1._dp + 3._dp*twopi*x)))
 
 ! Create dataset to store initial condition and (space x time) solution
   CALL h5screate_simple_f( &
