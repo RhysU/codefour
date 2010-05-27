@@ -131,8 +131,8 @@ PROGRAM main
  PRINT '(" Number of time steps = ", I7, " with dt = ", F16.12)', &
        nsteps, dt
  CALL h5ltmake_dataset_double_f( &
-      file_hid, "t", 1, [INTEGER(HSIZE_T)::nsteps], &
-      [(dt*i, i=0, nsteps-1, 1)], error)
+      file_hid, "t", 1, [INTEGER(HSIZE_T)::nsteps+1], &
+      [(dt*i, i=0, nsteps, 1)], error)
 
 ! Create dataset to store initial condition and (space x time) solution
  CALL h5screate_simple_f( &
