@@ -98,9 +98,7 @@ PROGRAM main
 #ifdef VISCOUSORDER
  ! Ensure Explicit RK3 diffusive stability criteria met:
  ! Magnitude from where 1 + x + x**2/2 + x**3/6 ~ 1 along negative real axis
- IF (dt > 2.512_dp / (nu * pi**2 * n**2)) THEN
-  dt = 2.512_dp / (nu * pi**2 * n **2)
- END IF
+ dt = MIN(dt, 2.512_dp / (nu * pi**2 * n **2))
 #endif
  lambda = dt * hi
  nsteps = INT(tend / dt)
