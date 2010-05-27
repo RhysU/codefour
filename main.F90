@@ -45,25 +45,19 @@ PROGRAM main
  CALL cpu_time (start)
  ALLOCATE ( x(0:n), xh(0:n), u(0:n), up(0:n,1:2), &
             frp(0:n), frm(0:n), f(0:n), fp(0:n), fm(0:n) )
+
+! Setup grid x \in [0,1] containing n points
  h = 1.d0 / n
  hi = 1.d0 / h
-! Setup grid x \in [0,1]
- DO i = 0, n, 1
-  x(i) = REAL(i,dp) * h
-  xh(i) = x(i) + 0.5_dp * h
- END DO
-
+ FORALL(i=0:n:1) x(i) = i*h
+ xh = x + 0.5_dp*h
  CALL h5ltmake_dataset_double_f( &
       file_hid, "x", 1, [INTEGER(HSIZE_T)::n], x, error)
  CALL h5ltmake_dataset_double_f( &
       file_hid, "xh", 1, [INTEGER(HSIZE_T)::n], xh, error)
 
 ! Initial data
- u = 0_dp
- DO i = 0, n, 1
-  u(i) = SIN(2_dp * pi * x(i))
-! if ((x(i) > 0.25) .AND. (x(i) < 0.75)) u(i) = 1_dp
- END DO
+ u = SIN(2_dp * pi * x)
 
 ! Determine the WENO reconstruction order from defines
 #if WENOORDER == 3
