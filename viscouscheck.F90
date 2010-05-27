@@ -14,6 +14,12 @@ PROGRAM viscouscheck
  REAL(KIND = dp), DIMENSION(:,:), ALLOCATABLE :: d2u, d2u_error
  CHARACTER (len = 20) :: str
 
+ IF (command_argument_count() /= 1) THEN
+  CALL get_command_argument(0, str)
+  print *, "Usage: ", trim(str), " 2**npoints"
+  CALL EXIT(1)
+ END IF
+
  CALL get_command_argument (1, str)
  READ (str, fmt = '(I10)') powfinal
  ALLOCATE ( u(0:2**powfinal), expected(0:2**powfinal) )
