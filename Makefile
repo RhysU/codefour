@@ -3,7 +3,7 @@
 FFLAGS= -g -O0 -warn -I.
 
 programs=weno5.x weno3.x weno54.x weno32.x viscouscheck.x
-common=assorted.o doublePrecision.o flux.o rhside.o
+common=assorted.o flux.o rhside.o
 
 all: $(programs)
 
