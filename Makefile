@@ -1,6 +1,6 @@
 # $HeadURL$
 # $Id$
-FFLAGS= -g -O0 -warn -I.
+FFLAGS= -g -O3 -warn -I.
 
 programs=weno5.x weno3.x weno54.x weno32.x viscouscheck.x
 common=doublePrecision.o assorted.o flux.o rhside.o
