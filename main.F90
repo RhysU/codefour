@@ -107,11 +107,22 @@ PROGRAM main
        file_hid, "t", 1, [INTEGER(HSIZE_T)::nsteps+1], &
        [(dt*i, i=0, nsteps, 1)], error)
 
-! Initial condition: simple sine wave for debugging
+! Initial condition 1: simple sine wave for debugging
 ! u = SIN(twopi * x)
-! Initial condition: viscous analytic solution available via Hopf-Cole
-  u =   ( 297._dp*(                 SIN(1._dp + 3._dp*twopi*x))) &
-      / (  50._dp*(100._dp + 99._dp*COS(1._dp + 3._dp*twopi*x)))
+
+! Initial condition 2: moderate viscous analytic solution available via Hopf-Cole
+! u =   ( 297._dp*(                 SIN(1._dp + 3._dp*twopi*x))) &
+!     / (  50._dp*(100._dp + 99._dp*COS(1._dp + 3._dp*twopi*x)))
+! Analytic solution is
+! u =   (   3*(       EXP(-9*t/100)*SIN(1 + 3*twopi*x))) &
+!     / (  50*(10/9 + EXP(-9*t/100)*COS(1 + 3*twopi*x)))
+
+! Initial condition 3: sharper viscous analytic solution available via Hopf-Cole
+  u =   (   3._dp*(                     SIN(1._dp + 3._dp*twopi*x))) &
+      / (  50._dp*(10000._dp/9999._dp + COS(1._dp + 3._dp*twopi*x)))
+! Analytic solution is
+! u =   (   3*(             EXP(-9*t/100)*SIN(1 + 3*twopi*x))) &
+!     / (  50*(10000/9999 + EXP(-9*t/100)*COS(1 + 3*twopi*x)))
 
 ! Create dataset to store initial condition and (space x time) solution
   CALL h5screate_simple_f( &
