@@ -60,9 +60,6 @@ PROGRAM main
   CALL h5ltmake_dataset_double_f( &
        file_hid, "xh", 1, [INTEGER(HSIZE_T)::n], xh, error)
 
-! Initial data
-  u = SIN(2_dp * pi * x)
-
 ! Determine the WENO reconstruction order from #defines
 #if WENOORDER == 3
 #define RECONSTRUCT_FUNCTION reconstruct3
@@ -108,6 +105,9 @@ PROGRAM main
   CALL h5ltmake_dataset_double_f( &
        file_hid, "t", 1, [INTEGER(HSIZE_T)::nsteps+1], &
        [(dt*i, i=0, nsteps, 1)], error)
+
+! Specify initial condition
+  u = SIN(2_dp * pi * x)
 
 ! Create dataset to store initial condition and (space x time) solution
   CALL h5screate_simple_f( &
