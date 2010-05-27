@@ -2,6 +2,7 @@
 /doubleprecision.mod
 /*__genmod.f90
 /*__genmod.mod
+/*.h5
 /*.o
 /sol*.txt
 /urm.txt
