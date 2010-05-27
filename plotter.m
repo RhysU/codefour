@@ -6,7 +6,7 @@ if nargin < 1
 endif
 
 set(gca,'FontSize',18)
-arg_list = argv()
+arg_list = argv();
 load("-hdf5", arg_list{1})
 
 for i = 1:size(u,2)
