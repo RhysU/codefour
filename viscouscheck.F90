@@ -1,8 +1,9 @@
 ! $HeadURL$
 ! $Id$
+
+!> Checks the error for the centered finite difference routines
+!! against a field with a known second derivative.
 PROGRAM viscouscheck
-! Checks the error for the centered finite difference routines
-! against the field sin(x) with known second derivative -sin(x).
 
  USE doublePrecision
  IMPLICIT NONE
@@ -54,7 +55,12 @@ PROGRAM viscouscheck
  DEALLOCATE ( u, d2u, d2u_error, expected )
 END PROGRAM viscouscheck
 
-! For 1D grid size n, load sample data with spacing h into u and d2u
+!> Load data for the 1D sample problem \f$u(x) = \sin(x)\f$.
+!!
+!! @param n   Grid size
+!! @param h   Uniform grid spacing
+!! @param u   \f$u(x)\f$
+!! @param d2u \f$\frac{\partial^2}{\partial{}x^2}u(x)\f$
 SUBROUTINE problem1 (n, h, u, d2u)
  USE doublePrecision
  IMPLICIT NONE
@@ -72,7 +78,13 @@ SUBROUTINE problem1 (n, h, u, d2u)
  END DO
 END SUBROUTINE problem1
 
-! For 1D grid size n, load sample data with spacing h into u and d2u
+!> Load data for the 1D sample problem
+!! \f$u(x) = \cos\left(x+2\cos(3x)\right)\f$.
+!!
+!! @param n   Grid size
+!! @param h   Uniform grid spacing
+!! @param u   \f$u(x)\f$
+!! @param d2u \f$\frac{\partial^2}{\partial{}x^2}u(x)\f$
 SUBROUTINE problem2 (n, h, u, d2u)
  USE doublePrecision
  IMPLICIT NONE

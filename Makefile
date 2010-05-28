@@ -51,13 +51,19 @@ viscousnop.F90:       doublePrecision.mod
 viscouscheck.F90:     doublePrecision.mod
 
 clean:
-	@rm -fv *.mod *.o *.x *__genmod.f90 *__genmod.mod
+	@rm -fv  *.mod *.o *.x *__genmod.f90 *__genmod.mod
+	@rm -rfv docs
+
+docs:
+	@doxygen
 
 # Use HDF5-enabled toolchain
 FC=h5fc
 LD=${FC}
 RANLIB=touch
 AR=ar r
+
+.PHONY: clean docs
 
 .SUFFIXES:
 .SUFFIXES: .f .o
