@@ -111,8 +111,8 @@ PROGRAM main
 
 ! Initial condition 2: viscous analytic solution from Hopf-Cole
   t = 0
-  u =   (                        27*pi*SIN(1 + 6*pi*x) ) &
-      / ( 125*(10*EXP(9*pi*pi*t/25)+ 9*COS(1 + 6*pi*x)))
+  u =   (                          198*pi*SIN(1 + 4*pi*x) ) &
+      / ( 125*(100*EXP(4*pi*pi*t/125)+ 99*COS(1 + 4*pi*x)))
 
 ! Create dataset to store initial condition and (space x time) solution
   CALL h5screate_simple_f( &

@@ -3,9 +3,10 @@
 for code in weno32 weno54
 do
     echo $code spawning...
-    for resolution in 25 50 100 125 150 175 200 250 300 350
+    for resolution in 8 16 32 64 128 256
     do
-        ./${code}.x "${code}.${resolution}.h5" $resolution &
+        resolution_name=`printf "%03d" $resolution`
+        ./${code}.x "${code}.${resolution_name}.h5" $resolution &
     done
 done
 wait
