@@ -14,10 +14,9 @@ PROGRAM main
 
 ! Problem parameters
   REAL(KIND = dp), PARAMETER :: pi      = 4._dp*ATAN(1._dp)
-  REAL(KIND = dp), PARAMETER :: twopi   = 2._dp*pi
   REAL(KIND = dp), PARAMETER :: tend    = 0.30_dp
   REAL(KIND = dp), PARAMETER :: cfl     = 0.5_dp
-  REAL(KIND = dp), PARAMETER :: nu      = 0.01_dp
+  REAL(KIND = dp), PARAMETER :: nu      = 1._dp/500._dp
   REAL(KIND = dp), PARAMETER :: rk(2,2) = RESHAPE( &              ! TVD RK3
              [0.75_dp, (1._dp/3._dp), (0.25_dp), (2._dp/3._dp)], SHAPE(rk))
 
@@ -108,28 +107,12 @@ PROGRAM main
        [(dt*i, i=0, nsteps, 1)], error)
 
 ! Initial condition 1: simple sine wave for debugging
-! u = SIN(twopi * x)
+! u = SIN(2._dp*pi*x)
 
-! Initial condition 2: easy viscous analytic solution available via Hopf-Cole
-  u =   (   3._dp*(               SIN(1._dp + 3._dp*twopi*x))) &
-      / (  50._dp*(10._dp/9._dp + COS(1._dp + 3._dp*twopi*x)))
-! Analytic solution is
-! u =   (   3*(       EXP(-9*t/100)*SIN(1 + 3*twopi*x))) &
-!     / (  50*(10/9 + EXP(-9*t/100)*COS(1 + 3*twopi*x)))
-
-! Initial condition 3: moderate viscous analytic solution available via Hopf-Cole
-! u =   (   3._dp*(                 SIN(1._dp + 3._dp*twopi*x))) &
-!     / (  50._dp*(100._dp/99._dp + COS(1._dp + 3._dp*twopi*x)))
-! Analytic solution is
-! u =   (   3*(         EXP(-9*t/100)*SIN(1 + 3*twopi*x))) &
-!     / (  50*(100/99 + EXP(-9*t/100)*COS(1 + 3*twopi*x)))
-
-! Initial condition 4: sharper viscous analytic solution available via Hopf-Cole
-! u =   (   3._dp*(                     SIN(1._dp + 3._dp*twopi*x))) &
-!     / (  50._dp*(10000._dp/9999._dp + COS(1._dp + 3._dp*twopi*x)))
-! Analytic solution is
-! u =   (   3*(             EXP(-9*t/100)*SIN(1 + 3*twopi*x))) &
-!     / (  50*(10000/9999 + EXP(-9*t/100)*COS(1 + 3*twopi*x)))
+! Initial condition 2: viscous analytic solution from Hopf-Cole
+  t = 0
+  u =   (                        27*pi*SIN(1 + 6*pi*x) ) &
+      / ( 125*(10*EXP(9*pi*pi*t/25)+ 9*COS(1 + 6*pi*x)))
 
 ! Create dataset to store initial condition and (space x time) solution
   CALL h5screate_simple_f( &
