@@ -1,11 +1,22 @@
 ! $HeadURL$
 ! $Id$
+
+!> This program solves inviscid or viscid 1D scalar conservation laws
+!! of the form \f$ u_t + f(u)_x = 0 \f$ or \f$ u_t + f(u)_x = \nu u_{xx} \f$
+!! using WENO reconstruction and a Lax-Friedrichs flux on the domain
+!! \f$x\in\left[0,1\right]\f$.  Time stepping is performed using a 3rd-order
+!! TVD Runge-Kutta scheme.  Periodic boundary conditions are used, but that
+!! is hidden in subroutines.  Different reconstruction and viscous term
+!! behavior is controlled using the compile-time macro definitions of
+!! <tt>WENOORDER</tt> and <tt>VISCOUSORDER</tt>.  All results are saved into
+!! a single HDF5 file for easy import into analysis software.
+!!
+!! @see flux() for the Lax-Friedrichs %flux details.
+!! @see reconstruct3() or reconstruct5() for the WENO reconstruction details.
+!! @see viscous2() or viscous4() for the viscous term details.
+!! @see Section 2 of Liu, Osher, and Chan's 1994 JCP paper for a
+!!      synopsis of the TVD Runge-Kutta scheme employed.
 PROGRAM main
-! This program solves the one-dimensional scalar conservation law
-! u_t + f(u)_x =  0 using WENO reconstruction per reconstructWENO_ORDER 
-! #define and a Lax-Friedrichs flux (in flux.f90).  Time stepping is performed
-! using a 3rd-order TVD Runge-Kutta scheme.  Periodic boundary conditions are
-! used, but that is hidden in subroutines.
 
   USE HDF5
   USE H5LT
