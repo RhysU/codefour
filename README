@@ -1,0 +1,14 @@
+This Fortran 90 code solves inviscid or viscid 1D scalar conservation laws of
+the form u_t + f(u)_x = 0 or u_t + f(u)_x = \nu u_{xx} using WENO
+reconstruction and a Lax-Friedrichs flux.
+
+It is based heavily on one provided through Caltech's AE 232 course
+(http://www.its.caltech.edu/~appelo/ae232/).  Compared to the course,
+the following changes have been made:
+
+  1) Adding 3rd-order WENO reconstruction
+  2) Adding 2nd and 4th order viscous capabilities
+  3) Adding HDF5-based result output
+  4) Adding Doxygen-based documentation
+  5) Adding Mathematica-based error analysis against Hopf-Cole-based
+     analytic solutions of the viscid Burger's equation.
