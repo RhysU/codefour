@@ -2,7 +2,7 @@
 ! $Id$
 
 !> Compute the Lax-Friedrichs flux
-!! \f$\hat{f}^{\text{LF}}\left(u^{-},u^{+}\right)\f$ given values of
+!! \f$\hat{f}^{\mbox{LF}}\left(u^{-},u^{+}\right)\f$ given values of
 !! \f$u\f$.  See section 3.1 of Shu's 2009 SIAM Review paper
 !! or section 2 of Liu, Sher, and Chan's 1994 JCP paper for more details.
 !!
