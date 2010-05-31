@@ -136,7 +136,7 @@ PROGRAM main
 
 !   Substep 1
     CALL flux (fp, fm, u, n)
-    CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
+    CALL RECONSTRUCT_FUNCTION (frp, fp, n,  1)
     CALL RECONSTRUCT_FUNCTION (frm, fm, n, -1)
     f = frp + frm
     CALL rhside(fp, f, n, hi)
@@ -145,7 +145,7 @@ PROGRAM main
 
 !   Substep 2
     CALL flux (fp, fm, up(:,1), n)
-    CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
+    CALL RECONSTRUCT_FUNCTION (frp, fp, n,  1)
     CALL RECONSTRUCT_FUNCTION (frm, fm, n, -1)
     f = frp + frm
     CALL rhside (fp, f, n, hi)
@@ -154,7 +154,7 @@ PROGRAM main
 
 !   Substep 3
     CALL flux (fp, fm, up(:,2), n)
-    CALL RECONSTRUCT_FUNCTION (frp, fp, n, 1)
+    CALL RECONSTRUCT_FUNCTION (frp, fp, n,  1)
     CALL RECONSTRUCT_FUNCTION (frm, fm, n, -1)
     f = frp + frm
     CALL rhside(fp, f, n, hi)
