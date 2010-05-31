@@ -1,7 +1,7 @@
 ! $HeadURL$
 ! $Id$
 
-!> Do nothing; provided for interface similarity to viscous2() and viscous4()
+!> Do nothing. Provided for interface similarity to viscous2() and viscous4()
 !! to support solving selectively solving inviscid equations using
 !! compile-time definitions.
 !!
