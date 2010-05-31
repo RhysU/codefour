@@ -1,6 +1,17 @@
 ! $HeadURL$
 ! $Id$
 
+!> \mainpage
+!! This code, which is based on one provided though <a
+!! href="http://www.its.caltech.edu/~appelo/ae232/">Caltech's AE 232
+!! course</a>, solves inviscid or viscid 1D scalar conservation law of the
+!! form \f$ u_t + f(u)_x = 0 \f$ or \f$ u_t + f(u)_x = \nu u_{xx} \f$ using
+!! WENO reconstruction and a Lax-Friedrichs flux.
+!!
+!! @see main() for more detailed information on the numerics.
+!! @see \ref Makefile for details on how the code is built.
+
+
 !> This program solves inviscid or viscid 1D scalar conservation laws
 !! of the form \f$ u_t + f(u)_x = 0 \f$ or \f$ u_t + f(u)_x = \nu u_{xx} \f$
 !! using WENO reconstruction and a Lax-Friedrichs flux on the domain
@@ -9,7 +20,8 @@
 !! is hidden in subroutines.  Different reconstruction and viscous term
 !! behavior is controlled using the compile-time macro definitions of
 !! <tt>WENOORDER</tt> and <tt>VISCOUSORDER</tt>.  All results are saved into
-!! a single HDF5 file for easy import into analysis software.
+!! a single HDF5 file for easy import into analysis software.  Initial
+!! conditions are currently hardcoded into this routine.
 !!
 !! @see flux() for the Lax-Friedrichs %flux details.
 !! @see reconstruct3() or reconstruct5() for the WENO reconstruction details.
